@@ -224,7 +224,10 @@ module EventMachine
           # DELETE /containers/(id)
           query_params = @client._parse_query_params( ["v"], opts )
 
-          @client._make_request( :method => "DELETE", :path => "/containers/#{@id}", :query_params => query_params, :expect => 'boolean')
+          result = @client._make_request( :method => "DELETE", :path => "/containers/#{@id}", :query_params => query_params, :expect => 'response_header')
+	  unless result.http_status.to_s.start_with? "2"
+	    raise "API response: #{result.http_status}"
+	  end
         end
 
         def copy_out

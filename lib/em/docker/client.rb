@@ -188,6 +188,8 @@ module EventMachine
           return parsed
         elsif expect == 'boolean'
           return result.http_status.to_s.start_with? "2"
+        elsif expect == 'response_header'
+  	  return result
         else
           raise "unable to parse expected value #{expect}"
         end
